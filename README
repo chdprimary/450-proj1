@@ -1,0 +1,23 @@
+README -- 450-proj1 -- Zachary Hjorth & Christian Dean
+
+
+Downloading git on Ubuntu:
+
+	sudo apt-get install git
+
+Instructions for committing a change to the github repo:
+
+	1) create / change whatever file(s)
+	2) git add <file-name>
+		- this adds a file to the commit list
+	3) git commit -m '<message>'
+		- this commits the file, with <message> as a description of the changes made
+	4) git remote add origin http://github.com/<username>/450-proj1.git
+		- creates a 'remote' to the repo on GitHub
+		- only needs to be done once, not per-commit
+	5) git push origin master
+		- pushes new commits to the 'master' branch of the repo
+
+
+
+
