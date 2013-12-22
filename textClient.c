@@ -9,43 +9,57 @@
 #include <errno.h>
 #include <arpa/inet.h>
 
-int main(void)
+int main(int argc, char *argv[])
 {
-	int sockfd = 0, n =0;
-	char recvBuff[1024];
+	int sockfd = 0;
+	char sendBuff[1025];
 	struct sockaddr_in serv_addr;
 
-	memset(recvBuff,'0',sizeof(recvBuff));
+
+	/*	zero out received message buffer	*/
+	memset(sendBuff,'0',sizeof(sendBuff));
+
+
+	/*      we take the first cmdline arg as the message to be passed       */
+	if (argc!=2)
+	{
+		printf("You must enter a message as an argument!\n");
+		return 0;
+	}
+	else
+		strcpy(sendBuff,argv[1]);
+
+
+	/*	set sockfd as a socket with TCP over internet	*/
 	if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
 		printf("Could not create socket \n");
 		return 1;
 	}
 
-	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(5000);
-	serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
-	if (connect(sockfd,(struct sockaddr *)&serv_addr, sizeof(serv_addr))<0)
+	/*	define the domain used by serv_addr
+	        use port 5000
+		set internet address as localhost	*/
+	serv_addr.sin_family 		= AF_INET;
+	serv_addr.sin_port 		= htons(5000);
+	serv_addr.sin_addr.s_addr 	= inet_addr("127.0.0.1");
+
+
+	/*	perform an ACTIVE connection over the socket with the machine at serv_addr	*/
+	if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0)
 	{
 		printf("\nError: Connect Failed\n");
 		return 1;
 	}
 
-	while((n = read(sockfd, recvBuff, sizeof(recvBuff)-1)) > 0)
-	{
-		recvBuff[n] =0;
-		if(fputs(recvBuff,stdout) == EOF)
-		{
-			printf("\nError: Fputs error");
-		}
-		printf("\n");
-	}
 
-	if(n<0)
-	{
-		printf("\nRead Error \n");
-	}
+	/*      write buffer into connection
+                close connection		*/
+	write(sockfd,sendBuff,strlen(sendBuff));
+	sleep(1);
+	close(sockfd);
 
+	/*	ends program	*/
 	return 0;
 }
