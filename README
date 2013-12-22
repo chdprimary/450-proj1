@@ -1,6 +1,17 @@
 README -- 450-proj1 -- Zachary Hjorth & Christian Dean
 
 
+EDIT 12/22/13:
+
+	Useful sites for C socket programming:
+		http://beej.us/guide/bgnet/output/html/multipage/ipstructsdata.html
+		http://www.codeproject.com/Articles/586000/Networking-and-Socket-programming-tutorial-in-C
+	
+	Useful site for learning basic Git:
+		http://try.github.io/
+
+
+
 Downloading git on Ubuntu:
 
 	sudo apt-get install git
@@ -17,6 +28,7 @@ Instructions for committing a change to the github repo:
 		- only needs to be done once, not per-commit
 	5) git push origin master
 		- pushes new commits to the 'master' branch of the repo
+		
 
 
 
