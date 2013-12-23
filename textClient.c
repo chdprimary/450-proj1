@@ -14,7 +14,7 @@
 #include <errno.h>
 #include <arpa/inet.h>
 
-
+void checkargs(int,char**);
 
 int main(int argc, char *argv[])
 {
@@ -22,21 +22,17 @@ int main(int argc, char *argv[])
 	char sendBuff[1025];
 	struct sockaddr_in serv_addr;
 
+	checkargs(argc,argv);
 
-	/*	zero out received message buffer	*/
+	const char *HOST = argv[1];
+	const int PORT = atoi(argv[2]);
+
+
+	/*	Zero out message buffer	to be sent	*/
 	memset(sendBuff,'0',sizeof(sendBuff));
 
 
-	/*	print usage for --help flag OR invalid number of args	*/
-	if ( ((argv[0] == "./textClient" || argv[0] == "textClient") && argv[1] == "--help") || argc != 1 )
-	{
-		printf("\nUsage: [cat FILE_IN.TXT |] ./textClient\n");
-		printf("\tTakes a message from a file or from stdin and transmits it to a specified port.\n\n");
-		return 1;
-	}
-
-
-	/*      We take the first cmdline arg as the message to be passed     */
+	/*	Get message from stdin or file char by char. Store in sendBuff. Append a '\0'.	*/
 	if (isatty(STDIN_FILENO))
 		printf("\nPlease enter your message:\n");
 	char ch = getchar();
@@ -76,8 +72,8 @@ int main(int argc, char *argv[])
 	        use port 5000
 		set internet address as localhost	*/
 	serv_addr.sin_family 		= AF_INET;
-	serv_addr.sin_port 		= htons(5000);
-	serv_addr.sin_addr.s_addr 	= inet_addr("127.0.0.1");
+	serv_addr.sin_port 		= htons(PORT);
+	serv_addr.sin_addr.s_addr 	= inet_addr(HOST);
 
 
 	/*	perform an ACTIVE connection over the socket with the machine
@@ -97,4 +93,15 @@ int main(int argc, char *argv[])
 
 	/*	ends program	*/
 	return 0;
+}
+
+void checkargs(int argc, char *argv[])
+{
+	/*	Print usage for --help flag OR invalid number of args	*/
+	if ( ((argv[0] == "./textClient" || argv[0] == "textClient") && argv[1] == "--help") || argc != 3 )
+	{
+		printf("\nUsage: [cat FILE_IN.TXT |] ./textClient HOST PORT_NUM\n");
+		printf("\tTakes a text message from stdin or from a pipe, and transmits it to HOST:PORT_NUM.\n\n");
+		exit(1);
+	}
 }

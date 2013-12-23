@@ -1,6 +1,8 @@
 /*
 	TODO:
 	* upgrade sockaddr to addr_info
+	* figure out how to display usage from --help flag
+	* encapsulate everything into functions
 */
 
 #include <sys/socket.h>
@@ -13,6 +15,8 @@
 #include <string.h>
 #include <sys/types.h>
 
+void checkargs(int argc, char *argv[]);
+
 int main(int argc, char *argv[])
 {
 	int i;
@@ -22,6 +26,10 @@ int main(int argc, char *argv[])
 	struct sockaddr_in serv_addr;
 	char recvBuff[1024];
 	int numrv;
+
+	checkargs(argc,argv);
+
+	const int PORT = atoi(argv[1]);
 
 	/*	set listenfd as a socket with TCP over internet
 		print success message				*/
@@ -40,7 +48,7 @@ int main(int argc, char *argv[])
 		use port 5000				*/
 	serv_addr.sin_family 		= AF_INET;
 	serv_addr.sin_addr.s_addr 	= htonl(INADDR_ANY);
-	serv_addr.sin_port 		= htons(5000);
+	serv_addr.sin_port 		= htons(PORT);
 
 
 	/*	bind socket to serv_addr	*/
@@ -79,3 +87,13 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
+void checkargs(int argc, char *argv[])
+{
+        /*      Print usage for --help flag OR invalid number of args   */
+        if ( ((argv[0] == "./textServer" || argv[0] == "textServer") && argv[1] == "--help") || argc != 2 )
+        {
+                printf("\nUsage: ./textServer PORT_NUM\n");
+                printf("\tListens for text messages on PORT_NUM and displays them on stdout.\n\n");
+                exit(1);
+        }
+}
