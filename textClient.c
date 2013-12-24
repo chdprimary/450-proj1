@@ -4,7 +4,7 @@
  * Due: 12/15/14                      |,4-  ) )-,_. ,\ (  `'-'  *
  * textClient.c                      '---''(_/--'  `-'\_)       *
  *                                                              *
- * A program that does programs programs to undo redos.		*
+ * A program that programs programs to undo redos.              *
  ***************************************************************/
 
 #include <sys/socket.h>
