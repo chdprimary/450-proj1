@@ -1,10 +1,10 @@
 /****************************************************************
  * Christian Dean                      |\      _,,,---,,_       *
- * Due: 12/15/14                 ZZZzz /,`.-'`'    -.  ;-;;,_   *
- * textClient.c                       |,4-  ) )-,_. ,\ (  `'-'  *
- *                                   '---''(_/--'  `-'\_)       *
+ * Zachry Hjorth                 ZZZzz /,`.-'`'    -.  ;-;;,_   *
+ * Due: 12/15/14                      |,4-  ) )-,_. ,\ (  `'-'  *
+ * textClient.c                      '---''(_/--'  `-'\_)       *
  *                                                              *
- * A program that
+ * A program that does programs programs to undo redos.		*
  ***************************************************************/
 
 #include <sys/socket.h>
